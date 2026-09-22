@@ -4,15 +4,15 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello World! home api called');
+  res.send('Index API called');
 });
 
 app.get('/health', (req, res) => {
-  res.send('Hello World! health called');
+  res.send('Health API called');
 });
 
 app.get('/api', (req, res) => {
-  res.send('Hello World! api called');
+  res.send('Api called');
 });
 
 app.listen(port, () => {
