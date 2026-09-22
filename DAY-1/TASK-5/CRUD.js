@@ -12,6 +12,12 @@ res.json(tasks);
 
 
 app.get('/api/tasks/:id', (req, res) => {
+    
+    if(typeof(req.params.id)==String)
+    {
+        res.json("ID should be number");
+    }
+
 const id = Number(req.params.id); 
 const task = tasks.find(t => t.id === id);
 res.json(task);
@@ -45,26 +51,26 @@ tasks = tasks.filter(t => t.id !== Number(req.params.id));
 res.json(tasks);
 });
 
-
-app.get('/api/tasks?completed=true', (req, res) => {
+// API: /api/tasks?completed=true
+app.get('/api/completedTasks', (req, res) => {
 const completedTasks = tasks.filter(t => t.completed === true);
 res.json(completedTasks);
 });
 
-
-app.get('/api/tasks?priority=high', (req, res) => {
+// API: /api/tasks?priority=high
+app.get('/api/priorityTasks', (req, res) => {
 const priorityTasks = tasks.filter(t => t.priority === "high");
 res.json(priorityTasks);
 });
 
-
-app.get('/api/tasks?search=express', (req, res) => {
+// API: /api/tasks?search=express
+app.get('/api/searchTasks', (req, res) => {
 const searchedTasks = tasks.filter(t => t.search === "express");
 res.json(searchedTasks);
 });
 
-
-app.get('/api/tasks?completed=false&search=express', (req, res) => {
+// API: /api/tasks?completed=false&search=express
+app.get('/api/completedSearchedTasks', (req, res) => {
 const completedSearchedTasks = tasks.filter((t => t.completed === false) && (t => t.search === "express"));
 res.json(completedSearchedTasks);
 });
