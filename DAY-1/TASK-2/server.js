@@ -4,6 +4,11 @@ const app = express();
 const port = 3000;
 
 
+app.get('/api/debug/request', (req, res) => {
+  res.send(req.originalUrl);
+});
+
+
 app.get('/api/users/:id', (req, res) => {
   res.send(req.params);
 });
