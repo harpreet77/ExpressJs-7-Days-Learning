@@ -12,15 +12,17 @@ res.json(tasks);
 
 
 app.get('/api/tasks/:id', (req, res) => {
-    
-    if(typeof(req.params.id)==String)
-    {
-        res.json("ID should be number");
-    }
+ const id = Number(req.params.id);
 
-const id = Number(req.params.id); 
-const task = tasks.find(t => t.id === id);
-res.json(task);
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      message: 'Invalid task ID'
+    });
+  }
+
+   const task = tasks.find(t => t.id === id);
+   res.json(task);  
+
 });
 
 
@@ -35,15 +37,30 @@ app.put('/api/tasks/:id', (req, res) => {
 const id = Number(req.params.id);
 const idx = tasks.findIndex(t => t.id === id);
 tasks[idx] = {
-    ...tasks[idx]
+    ...tasks[idx],
+    ...req.body
   };
   res.json(tasks[idx]);
 });
 
-//Incomplete
+
 app.patch('/api/tasks/:id', (req, res) => {
-res.json(tasks);
+  const id = Number(req.params.id);
+
+  const idx = tasks.findIndex(t => t.id === id);
+
+  if (idx === -1) {
+    return res.status(404).json({ message: 'Task not found' });
+  }
+
+  tasks[idx] = {
+    ...tasks[idx],
+    
+  };
+
+  res.json(tasks[idx]);
 });
+
 
 
 app.delete('/api/tasks/:id', (req, res) => {
